@@ -72,6 +72,8 @@ function App() {
     .catch(error => console.log(error))
   }
 
+  // console.log("Current taskdescription: "+taskdescription);
+
   /**
    * render all task lines
    * @param {*} todos : Task list
