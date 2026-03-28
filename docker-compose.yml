@@ -1,0 +1,21 @@
+services:
+  backend:
+    build: ./backend
+    container_name: todo-backend
+    restart: unless-stopped
+    networks:
+      - todo-net
+
+  frontend:
+    build: ./frontend
+    container_name: todo-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "42069:80"
+    networks:
+      - todo-net
+
+networks:
+  todo-net:

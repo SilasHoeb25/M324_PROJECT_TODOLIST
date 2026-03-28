@@ -1,0 +1,23 @@
+name: Deploy ToDo App
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy auf lokalen Docker
+    runs-on: self-hosted
+
+    steps:
+      - name: Code auschecken
+        uses: actions/checkout@v4
+
+      - name: Alte Docker-Container stoppen & entfernen
+        shell: powershell
+        run: |
+          Write-Host "Stopping previous Docker containers (if any)..."
+          docker compose down
+
+      - name: Deployment starten (neu bauen & hochfahren)
+        shell: powershell
+        run: docker compose up --build -d
