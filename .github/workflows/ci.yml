@@ -30,7 +30,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      # Für den Anfang: nur bauen, Tests optional
+      # einen bauen
       - name: Maven Build (ohne Tests)
         run: mvn -B -DskipTests package
 
