@@ -28,7 +28,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * All endpoints are annotated with @CrossOrigin to enable cross-origin
  * requests.
  *
- * @author DUDE
+ * @author DUDE is HERE
  */
 @RestController
 @SpringBootApplication
