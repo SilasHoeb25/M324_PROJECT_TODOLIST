@@ -54,3 +54,57 @@ jobs:
 
       - name: Frontend Production Build
         run: npm run build
+
+  # -------------------------------------------------------
+  # New: Test for Stage Branch
+  # -------------------------------------------------------
+
+  backend-test:
+    name: Backend testen (Maven)
+    runs-on: ubuntu-latest
+    needs: backend-build
+    defaults:
+      run:
+        working-directory: ./backend
+    steps:
+      - name: Code auschecken
+        uses: actions/checkout@v4
+
+      - name: JDK einrichten
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Maven Cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Unit-Tests ausführen
+        run: mvn -B test
+
+  frontend-test:
+    name: Frontend testen (Vitest)
+    runs-on: ubuntu-latest
+    needs: frontend-build
+    defaults:
+      run:
+        working-directory: ./frontend
+    steps:
+      - name: Code auschecken
+        uses: actions/checkout@v4
+
+      - name: Node einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Dependencies installieren
+        run: npm ci
+
+      - name: Unit-Tests ausführen
+        run: npm test
